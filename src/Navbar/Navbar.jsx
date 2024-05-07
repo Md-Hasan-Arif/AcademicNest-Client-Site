@@ -68,8 +68,8 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn btn-outline btn-primary">Register</a>
-            </div>
+                <Link to='/register'><button className="btn btn-outline btn-primary">Register/Login</button></Link>
+             </div>
         </div>
 
 

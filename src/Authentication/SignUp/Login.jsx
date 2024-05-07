@@ -1,28 +1,29 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Result } from "postcss";
 
 
-const SignUp = () => {
+const Login = () => {
 
-    const {createUser} = useContext(AuthContext);
+    const {signIn} = useContext(AuthContext);
 
-    const handleSignUp = event => {
+    const handleLogin = event =>{
         event.preventDefault();
-        const form = event.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const password = form.email.value;
-        console.log(name,email, password)
 
-     createUser(email, password)
-        .then(result => {
-            const user =  result.user;
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log( email, password);
+       
+        signIn(email, password)
+        .then(result =>{
+            const user = result.user;
             console.log(user)
         })
-        .catch(error => console.log(error))
-
+        .catch(error => console.log(error));
     }
+
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -31,36 +32,32 @@ const SignUp = () => {
                     <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                 </div>
                 <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form className="card-body" onSubmit={handleSignUp}>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                            </label>
-                            <input type="text" placeholder="Name" name="name" className="input input-bordered" required />
-                        </div>
+                    <form className="card-body" onSubmit={handleLogin}>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="email" className="input input-bordered" required />
+                            <input type="email" name="email" placeholder="email" className="input input-bordered" required />
                         </div>
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="password" className="input input-bordered" required />
-                           
+                            <input type="password" name="
+                            password" placeholder="password" className="input input-bordered" required />
+                            <label className="label">
+                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                            </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Sign Up</button>
+                            <input type="submit" value="Login" className="btn btn-outline btn-accent" />
                         </div>
                     </form>
-                    <p className="text-center mb-3">Already have an account <Link to = '/login' className="text-red-600">Login</Link> please </p>
+                    <p className="text-center mb-3">If you are new then <Link to="/register" className="text-red-600">SignUp</Link> first</p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default SignUp;
+export default Login;
