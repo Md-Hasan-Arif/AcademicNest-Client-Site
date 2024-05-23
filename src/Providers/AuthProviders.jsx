@@ -5,7 +5,7 @@ import app from "../Firebase/firbase.config";
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
-const AuthProviders = (children) => {
+const AuthProviders = ({children}) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading ] = useState(true);
