@@ -1,12 +1,45 @@
 
 
 const CreateAssignment = () => {
+
+    const createHandler = event =>{
+        event.preventDefault();
+
+        const form = event.target;
+        const name = form.assaignmentName.value;
+        const img = form.img.value;
+        const level = form.level.value;
+        const mark = form.mark.value;
+        const date = form.date.value;
+        const description = form.description.value;
+
+        const newAssignment = {name, img, level, mark, date, description};
+        console.log(newAssignment)
+
+        fetch('http://localhost:5000/allAssignment',{
+            method: 'POST',
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(newAssignment)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.insertedId){
+                alert('New Assignment is added')
+                form.reset();
+            }
+        })
+
+    
+    }
     return (
 
         <div className="bg-slate-600">
             <h2 className="text-center text-blue-300 font-bold">Create A Assaignment </h2>
-            <form >
-                <div className="grid md:grid-cols-2 mx-auto pt-5 pb-10 mt-5 bg-teal-300">
+            <form onSubmit={createHandler} >
+                <div className=" mx-auto pt-5 pb-10 mt-5 bg-teal-300 grid md:grid-cols-2">
                     {/* Input Field title */}
                     <div className="form-control w-1/2 mx-auto">
                         <label className="label">
@@ -61,20 +94,7 @@ const CreateAssignment = () => {
 
             </form>
         </div>
-        //     <div className="hero min-h-screen bg-base-200">
-        //         <div className="hero-content">
-        //             <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        //                 <form className="card-body">
-
-
-
-        //                     <div className="form-control mt-6">
-        //                         <button className="btn btn-primary">Create</button>
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     </div>
+     
     );
 };
 
