@@ -1,10 +1,13 @@
+// import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+// import { AuthContext } from "../../Providers/AuthProviders";
 
 
 const AssLayout = ({ data, allAssignment, setAssignment }) => {
 
     console.log(data)
+    
     const { date, description, img, level, mark, name, _id } = data;
 
     // console.log(date, description, img, level, mark, name, _id)

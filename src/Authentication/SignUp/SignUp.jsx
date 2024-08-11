@@ -12,7 +12,7 @@ const SignUp = () => {
         const form = event.target;
         const name = form.name.value;
         const email = form.email.value;
-        const password = form.email.value;
+        const password = form.password.value;
         console.log(name,email, password)
 
      createUser(email, password)
@@ -42,14 +42,14 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="email" className="input input-bordered" required />
+                            <input type="email" placeholder="email" name="email" className="input input-bordered" required />
                         </div>
 
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="password" className="input input-bordered" required />
+                            <input type="password" placeholder="password" name="password" className="input input-bordered" required />
                            
                         </div>
                         <div className="form-control mt-6">
