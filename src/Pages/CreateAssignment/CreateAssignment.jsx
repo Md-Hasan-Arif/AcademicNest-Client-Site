@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 
 
 const CreateAssignment = () => {
@@ -27,7 +28,12 @@ const CreateAssignment = () => {
         .then(data => {
             console.log(data)
             if(data.insertedId){
-                alert('New Assignment is added')
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Assignment Created Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'cool'
+               })
                 form.reset();
             }
         })

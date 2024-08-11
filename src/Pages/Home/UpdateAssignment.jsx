@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateAssignment = () => {
     const LoadedAssignment = useLoaderData();
@@ -15,22 +16,27 @@ const UpdateAssignment = () => {
         const date = form.date.value;
         const description = form.description.value;
 
-        const newAssignment = { name, img, level, mark, date, description };
-        console.log(newAssignment)
+        const UpdateAssignment = { name, img, level, mark, date, description };
+        console.log(UpdateAssignment)
 
-        fetch('http://localhost:5000/allAssignment', {
-            method: 'POST',
+        fetch(`http://localhost:5000/allAssignment/${_id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(newAssignment)
+            body: JSON.stringify(UpdateAssignment)
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.insertedId) {
-                    alert('New Assignment is added')
-                    form.reset();
+                if (data.modifiedCount> 0) {
+                   Swal.fire({
+                        title: 'Success!',
+                        text: 'Assignment Updated Successfully',
+                        icon: 'success',
+                        confirmButtonText: 'cool'
+                   })
+                  
                 }
             })
 
@@ -93,7 +99,7 @@ const UpdateAssignment = () => {
                     </div>
                 </div>
                 <div className="form-control mt-6">
-                    <input type="submit" value="Create" className="btn w-1/2 mx-auto mb-5 " />
+                    <input type="submit" value="Update" className="btn w-1/2 mx-auto mb-5 " />
                 </div>
 
             </form>
