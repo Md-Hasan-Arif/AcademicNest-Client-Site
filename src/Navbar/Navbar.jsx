@@ -10,10 +10,10 @@ const Navbar = () => {
     //     .catch(error => console.log(error))
     // }
     const navItems = <>
-        <li><Link to="/Home">All Assignment</Link></li>
-        <li><Link to="/CreateAssignment">Create Assignment</Link></li>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/">Home</Link></li>
+        <li><Link to="/" className="text-sky-400 font-semibold">All Assignment</Link></li>
+        <li><Link to="/CreateAssignment" className="text-green-300 font-semibold">Create Assignment</Link></li>
+        <li><Link to="/" className="text-sky-400 font-semibold">Home</Link></li>
+        <li><Link to="/" className="text-green-300 font-semibold">Home</Link></li>
 
     {/* <li><Link to="/about">About</Link></li>
         {
@@ -60,7 +60,7 @@ const Navbar = () => {
                        {navItems}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">AcademicNest</a>
+                <a className="btn btn-ghost text-xl text-green-300">AcademicNest</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

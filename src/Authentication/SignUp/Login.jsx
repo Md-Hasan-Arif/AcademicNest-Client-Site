@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 // import { Result } from "postcss";
 
 
@@ -20,6 +21,7 @@ const Login = () => {
         .then(result =>{
             const user = result.user;
             console.log(user)
+              Swal.fire('You registration complete successfully !')
         })
         .catch(error => console.log(error));
     }

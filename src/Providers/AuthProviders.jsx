@@ -45,3 +45,34 @@ const AuthProviders = ({children}) => {
 };
 
 export default AuthProviders;
+
+/**
+ * import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import app from "../Firebase/firbase.config";
+
+export const AuthContext = createContext();
+const auth = getAuth(app);
+
+const AuthProviders = ({ children }) => {
+  // ... rest of your AuthProvider code
+
+  const handleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // Handle successful sign-in, e.g., update user state, redirect
+      console.log(result.user);
+    } catch (error) {
+      console.error('Error signing in:', error);
+    }
+  };
+
+  // ... rest of your AuthProvider code
+};
+
+export default AuthProviders;
+
+ */

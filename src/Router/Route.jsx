@@ -14,7 +14,7 @@ const router = createBrowserRouter([
       element: <Main></Main>,
       children:[
         {
-            path: '/Home',
+            path: '/',
             element: <AllAssignment></AllAssignment>,
             loader: () => fetch('http://localhost:5000/allAssignment'),
         },
