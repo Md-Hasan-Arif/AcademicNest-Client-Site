@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import Swal from "sweetalert2";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -14,6 +14,8 @@ const Login = () => {
 
     const {signIn} = useContext(AuthContext);
     const [LoginError, setLoginError] =  useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
 
    
     const Auth = auth;
@@ -47,13 +49,16 @@ const Login = () => {
         .then(result =>{
             const user = result.user;
             console.log(user)
-              Swal.fire('You have successfully logged in !')
+            const from = location.state?.from?.pathname || "/";
+              Swal.fire('You have successfully logged in !');
+              navigate(from, {replace: true})
         })
         .catch(error => {
         console.log(error)
-        setLoginError(error.message)
+        setLoginError(error.message)  // Redirect to the original page or home page
         });
     }
+   
 
     return (
         <div className="hero min-h-screen bg-base-200">

@@ -2,12 +2,25 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 // import { AuthContext } from "../Providers/AuthProviders";
 
 
 const Navbar = () => {
-    const { user, } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    title: "LogOut",
+                    text: "You have successfully logged out.",
+                    icon: "success"
+                });
+            })
+            .catch((error) => console.log(error))
+    }
 
     // const handleLogOut =()=>{
     //     logOut()
@@ -20,14 +33,6 @@ const Navbar = () => {
         <li><Link to="/" className="text-sky-400 font-semibold">Home</Link></li>
         <li><Link to="/" className="text-green-300 font-semibold">Home</Link></li>
 
-        {/* <li><Link to="/about">About</Link></li>
-        {
-        user?.email ? <>
-         <li><Link to="/bookings">Bookings</Link></li>
-         <li><button onClick={handleLogOut}>Log Out</button></li>
-        </>
-        : <li><Link to="/login">Login</Link></li>
-       } */}
     </>
     return (
         // <div className="navbar bg-base-100 h-28 mb-4">
@@ -77,10 +82,14 @@ const Navbar = () => {
             <div className="navbar-end  grid grid-cols">
 
                 <div className="  text-end ">
-               
-                    <Link to='/register'><button className="btn btn-outline btn-info ">SignUp/Login</button></Link>
+
+                    {
+                        user ? <>
+                        <button onClick={handleLogOut} className="btn btn-outline btn-info ">LogOut</button>
+                        </> : <Link to='/register'><button className="btn btn-outline btn-info ">SignUp/Login</button></Link>
+                    }
                 </div>
-               
+
                 <div className="border mt-1">
                     {
                         user && <span className="text-sm text-yellow-300"> User : {user.email}</span>
