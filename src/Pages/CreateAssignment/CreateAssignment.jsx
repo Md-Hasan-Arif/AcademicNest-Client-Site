@@ -12,9 +12,10 @@ const CreateAssignment = () => {
         const level = form.level.value;
         const mark = form.mark.value;
         const date = form.date.value;
+        const email = form.email.value;
         const description = form.description.value;
 
-        const newAssignment = {name, img, level, mark, date, description};
+        const newAssignment = {name, img, level, mark, date, description, email};
         console.log(newAssignment)
 
         fetch('http://localhost:5000/allAssignment',{
@@ -43,7 +44,8 @@ const CreateAssignment = () => {
     return (
 
         <div className="bg-slate-600">
-            <h2 className="text-center text-blue-300 font-bold">Create A Assaignment </h2>
+            <h2 className="text-center text-blue-300 font-bold">Create A Assignment </h2>
+            
             <form onSubmit={createHandler} >
                 <div className=" mx-auto pt-5 pb-10 mt-5 bg-teal-300 grid md:grid-cols-2">
                     {/* Input Field title */}
@@ -85,6 +87,14 @@ const CreateAssignment = () => {
                         </label>
                         <input type="date" placeholder="date" name="date" className="input input-bordered" required />
                     </div>
+                   
+                    {/* Email field */}
+                    <div className="form-control  w-1/2 mx-auto">
+                        <label className="label">
+                            <span className="label-text text-black font-semibold">Date</span>
+                        </label>
+                        <input  type="email" placeholder="Email" name="email"  className="input input-bordered" required />
+                    </div>
 
                     {/* Description field */}
                     <div className="form-control  w-1/2 mx-auto">
@@ -93,6 +103,8 @@ const CreateAssignment = () => {
                         </label>
                         <textarea className="text-center" placeholder="explain the task" name="description" id="1" cols="10" rows="6"></textarea>
                     </div>
+
+                 
                 </div>
                 <div className="form-control mt-6">
                     <input type="submit" value="Create" className="btn w-1/2 mx-auto mb-5 " />

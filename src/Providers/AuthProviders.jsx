@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import app from "../Firebase/firbase.config";
+import { createUserWithEmailAndPassword,  onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import auth from "../Firebase/firbase.config";
 
-export const AuthContext = createContext();
-const auth = getAuth(app);
+
+export const AuthContext = createContext(null);
+// const auth = getAuth(app);
 
 const AuthProviders = ({children}) => {
 
@@ -23,11 +24,16 @@ const AuthProviders = ({children}) => {
 
     useEffect(()=>{
        const unsubscribe = onAuthStateChanged(auth, currentUser =>{
+           if(currentUser) {
             setUser(currentUser)
             console.log("Current User : ", currentUser);
             setLoading(false);
+           }
         });
-        return unsubscribe();
+        return ()=>{
+          unsubscribe();
+
+        } ;
     },[])
 
     const authInfo = {
@@ -36,7 +42,7 @@ const AuthProviders = ({children}) => {
         createUser,
         signIn
     }
-    
+  
     return (
         <AuthContext.Provider value ={authInfo}>
             {children}
@@ -46,33 +52,3 @@ const AuthProviders = ({children}) => {
 
 export default AuthProviders;
 
-/**
- * import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProviders";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import app from "../Firebase/firbase.config";
-
-export const AuthContext = createContext();
-const auth = getAuth(app);
-
-const AuthProviders = ({ children }) => {
-  // ... rest of your AuthProvider code
-
-  const handleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      // Handle successful sign-in, e.g., update user state, redirect
-      console.log(result.user);
-    } catch (error) {
-      console.error('Error signing in:', error);
-    }
-  };
-
-  // ... rest of your AuthProvider code
-};
-
-export default AuthProviders;
-
- */

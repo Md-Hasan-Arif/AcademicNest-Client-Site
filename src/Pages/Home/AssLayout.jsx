@@ -1,18 +1,33 @@
 // import { useContext } from "react";
+// import { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Providers/AuthProviders";
 // import { AuthContext } from "../../Providers/AuthProviders";
+
 
 
 const AssLayout = ({ data, allAssignment, setAssignment }) => {
 
-    console.log(data)
-    
-    const { date, description, img, level, mark, name, _id } = data;
+   const {user} = useContext(AuthContext);
+  
+
+
+    const { date, description, img, level, mark, name, _id , email} = data;
 
     // console.log(date, description, img, level, mark, name, _id)
     const handleDelete = _id => {
 
+        if(user ?.email !== email ){
+            Swal.fire({ 
+                title: "Unauthorized!",
+                text: "You are not authorized to delete this assignment.",
+                icon: "error",
+            })
+            return;
+        }
+        
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -21,29 +36,29 @@ const AssLayout = ({ data, allAssignment, setAssignment }) => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
 
                 fetch(`http://localhost:5000/allassignment/${_id}`, {
-                    
+
                     method: 'Delete'
                 })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    if( data.deletedCount > 0){
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                          })
-                          const remaining = allAssignment.filter(assignment => assignment._id !== _id)
-                          setAssignment(remaining);
-                    }
-                })
-              
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            })
+                            const remaining = allAssignment.filter(assignment => assignment._id !== _id)
+                            setAssignment(remaining);
+                        }
+                    })
+
             }
-          });
+        });
     }
     return (
 
@@ -56,20 +71,20 @@ const AssLayout = ({ data, allAssignment, setAssignment }) => {
             </figure>
             <div className="">
                 <h2 className="card-title">
-                  {name}
+                    {name}
                     <div className="badge badge-secondary">NEW</div>
                 </h2>
-              
+
                 <p>Date : {date}</p>
                 <p>Level : {level}</p>
                 <p>Mark: {mark}</p>
                 <div className="card-actions justify-end">
-                    
-                {/* view Assignment Button*/}
-                  <Link to={`/AssignmentDetails/${_id}`}> <button className="badge badge-outline">View Assignment</button></Link> 
-                
-                 {/* Delete Button */}
-                  <button onClick={() => handleDelete(_id)} className="badge badge-outline">Delete</button>
+
+                    {/* view Assignment Button*/}
+                    <Link to={`/AssignmentDetails/${_id}`}> <button className="badge badge-outline">View Assignment</button></Link>
+
+                    {/* Delete Button */}
+                    <button onClick={() => handleDelete(_id)} className="badge badge-outline">Delete</button>
                 </div>
 
             </div>
@@ -80,3 +95,14 @@ const AssLayout = ({ data, allAssignment, setAssignment }) => {
 };
 
 export default AssLayout;
+
+/*
+    // Check if the logged-in user is the creator of the assignment
+    if (user?.email !== email) {
+      Swal.fire({
+        title: "Unauthorized!",
+        text: "You are not authorized to delete this assignment.",
+        icon: "error",
+      });
+      return;
+    }*/

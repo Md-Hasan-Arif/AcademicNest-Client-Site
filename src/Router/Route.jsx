@@ -7,6 +7,7 @@ import Login from "../Authentication/SignUp/Login";
 import AssLayout from "../Pages/Home/AssLayout";
 import AssignmentDetails from "../Pages/Home/AssignmentDetails";
 import UpdateAssignment from "../Pages/Home/UpdateAssignment";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
         },
         {
           path: '/CreateAssignment',
-          element:<CreateAssignment></CreateAssignment>,
+          element:<PrivateRoute><CreateAssignment></CreateAssignment></PrivateRoute>,
         },
         {
           path: '/AssignmentLayout',
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         },
         {
           path:'/updateAssignment/:id',
-          element: <UpdateAssignment></UpdateAssignment>,
+          element: <PrivateRoute><UpdateAssignment></UpdateAssignment></PrivateRoute>,
           loader : ({params}) => fetch(`http://localhost:5000/allAssignment/${params.id}`),
         },
 
